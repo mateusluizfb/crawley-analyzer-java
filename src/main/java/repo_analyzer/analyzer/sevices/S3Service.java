@@ -1,4 +1,4 @@
-package repo_analyzer.analyzer.repo_analyzer.analyzer.sevices;
+package repo_analyzer.analyzer.sevices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +36,7 @@ public class S3Service {
         
         listObjectsRequest.setMarker(objectListing.getNextMarker());
     } while (objectListing.isTruncated());
+    
+    System.out.println(filesNames);
  }
 }
