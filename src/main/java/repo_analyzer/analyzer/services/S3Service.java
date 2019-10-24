@@ -54,10 +54,10 @@ public class S3Service {
 	  return fileNames;
 	}
 
-	public void downloadFile(String fileName) throws IOException {
+	public void downloadFile(String fileName, String outputFolder) throws IOException {
 	 S3Object object = s3Client.getObject(new GetObjectRequest(bucketName, fileName));
 	 InputStream reader = new BufferedInputStream(object.getObjectContent());
-	 File file = new File("tmp/" + fileName);      
+	 File file = new File(outputFolder + fileName);      
 	 OutputStream writer = new BufferedOutputStream(new FileOutputStream(file));
 
 	 int read = -1;
