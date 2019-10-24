@@ -37,5 +37,10 @@
         <artifactId>aws-java-sdk-s3</artifactId>
         <version>LATEST</version>
     </dependency>
+	<dependency>
+	    <groupId>org.antlr</groupId>
+	    <artifactId>antlr4-runtime</artifactId>
+	    <version>4.7.1</version>
+	</dependency>
   </dependencies>
 </project>
