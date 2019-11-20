@@ -17,6 +17,7 @@ public class App {
     	List<String> fileNames = s3Service.listBucketFiles();
     	
     	fileNames.forEach(fileName -> {
+    		/*
     		System.out.println("Downloading file " + fileName);
     		
         	try {
@@ -27,7 +28,8 @@ public class App {
         	
     		System.out.println("Unzip file " + fileName);
         	RepoService.unzipFile(fileName);
-        	
+        	*/
+    		
     		System.out.println("Visit code from " + fileName);
     		String folderName = fileName.substring(0, fileName.lastIndexOf('.'));
         	RepoService.visitCode(RepoService.TEMP_FOLDER + "code/" + folderName);

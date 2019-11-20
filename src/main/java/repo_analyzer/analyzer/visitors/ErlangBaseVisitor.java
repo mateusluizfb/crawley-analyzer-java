@@ -1,5 +1,8 @@
 package repo_analyzer.analyzer.visitors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Generated from Erlang.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -32,7 +35,22 @@ public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTokAtom(ErlangParser.TokAtomContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTokAtom(ErlangParser.TokAtomContext ctx) {
+		List<String> supervisorStrategies = new ArrayList<String>();
+		supervisorStrategies.add("one_for_all");
+		supervisorStrategies.add("one_for_one");
+		supervisorStrategies.add("rest_for_one");
+		supervisorStrategies.add("simple_one_for_one");
+		
+		String tokText = ctx.getText();
+
+		if(supervisorStrategies.contains(tokText)) {
+			System.out.println(tokText);
+		}
+		
+		return visitChildren(ctx);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 *
