@@ -18,7 +18,7 @@ public class App {
     	
     	fileNames.forEach(fileName -> {
     		System.out.println("Downloading file " + fileName);
-    		/*
+    		
         	try {
     			s3Service.downloadFile(fileName, RepoService.TEMP_FOLDER);
     		} catch (IOException e) {
@@ -27,11 +27,12 @@ public class App {
         	
     		System.out.println("Unzip file " + fileName);
         	RepoService.unzipFile(fileName);
-        	*/
+        	
     		System.out.println("Visit code from " + fileName);
     		String folderName = fileName.substring(0, fileName.lastIndexOf('.'));
         	RepoService.visitCode(RepoService.TEMP_FOLDER + "code/" + folderName);
-    		System.out.println("");
+        	
+    		System.out.println(" --- ");
     	});
     }
 }

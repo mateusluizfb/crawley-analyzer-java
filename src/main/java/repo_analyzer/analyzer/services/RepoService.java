@@ -30,30 +30,27 @@ public class RepoService {
 	    }
 	}
 	
-	public static void visitCode(String folderPath) {
-		File f = new File(folderPath);
-		File[] matchingFiles = f.listFiles();
-		System.out.println(folderPath);
+	public static void visitCode(String folderPath) {		
+		File file = new File(folderPath);
+		File[] matchingFiles = file.listFiles();
 		
-		
-		String tempPath;
-		File tempFile;
-		File[] tempMatchingFiles;
-
-		for(int i = 0; i < matchingFiles.length; i++) {
-			tempPath = matchingFiles[i].getPath();
-			tempFile = new File(tempPath);
-			tempMatchingFiles = tempFile.listFiles();
-			if(tempMatchingFiles != null) {
-				System.out.println(matchingFiles[i].getName() + " é pasta!");
-
-			}
+		if(matchingFiles == null) {
+			runParser(folderPath);
+			return;
 		}
 
-		// runParser("")
+		for (int i = 0; i < matchingFiles.length; i++) {
+			visitCode(matchingFiles[i].getPath());
+		}
 	}
 	
 	private static void runParser(String filePath) {
+		String extension = getExtension(filePath);
+
+		if(!extension.equals("erl")) return;
+				
+		System.out.println("Visiting " + filePath);
+		
 		try {
 			InputStream inputstream = new FileInputStream(filePath);
 			ErlangLexer lexer = new ErlangLexer(new ANTLRInputStream(inputstream));
@@ -62,5 +59,12 @@ public class RepoService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static String getExtension(String fileName) {
+		int i = fileName.lastIndexOf('.');
+		if (i > 0) return fileName.substring(i + 1);
+		
+		return "";
 	}
 }
