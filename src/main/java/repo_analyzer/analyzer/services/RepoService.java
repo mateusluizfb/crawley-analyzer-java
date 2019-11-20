@@ -16,7 +16,7 @@ import repo_analyzer.analyzer.visitors.ErlangLexer;
 import repo_analyzer.analyzer.visitors.ErlangParser;
 
 public class RepoService {
-	public static final String TEMP_FOLDER = "tmp";
+	public static final String TEMP_FOLDER = "tmp/";
 	
 	public static void unzipFile(String fileName) {
 	    String source = "tmp/" + fileName;
@@ -30,26 +30,37 @@ public class RepoService {
 	    }
 	}
 	
-	public static void visitCode(String fileName) {
-		File f = new File(fileName);
-		File[] matchingFiles = f.listFiles(new FilenameFilter() {
-		    public boolean accept(File dir, String name) {
-		    	/* Search for visitors */
-		        return true;
-		    }
-		});
+	public static void visitCode(String folderPath) {
+		File f = new File(folderPath);
+		File[] matchingFiles = f.listFiles();
+		System.out.println(folderPath);
 		
-		System.out.println(matchingFiles);
+		
+		String tempPath;
+		File tempFile;
+		File[] tempMatchingFiles;
 
-		/*
+		for(int i = 0; i < matchingFiles.length; i++) {
+			tempPath = matchingFiles[i].getPath();
+			tempFile = new File(tempPath);
+			tempMatchingFiles = tempFile.listFiles();
+			if(tempMatchingFiles != null) {
+				System.out.println(matchingFiles[i].getName() + " é pasta!");
+
+			}
+		}
+
+		// runParser("")
+	}
+	
+	private static void runParser(String filePath) {
 		try {
-			InputStream inputstream = new FileInputStream("tmp/helloword.erl");
+			InputStream inputstream = new FileInputStream(filePath);
 			ErlangLexer lexer = new ErlangLexer(new ANTLRInputStream(inputstream));
 			ErlangParser parser = new ErlangParser(new CommonTokenStream(lexer));
 		    new ErlangBaseVisitor().visitForms(parser.forms());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		*/
 	}
 }

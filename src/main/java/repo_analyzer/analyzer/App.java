@@ -16,13 +16,22 @@ public class App {
     	S3Service s3Service = new S3Service();
     	List<String> fileNames = s3Service.listBucketFiles();
     	
-    	try {
-			s3Service.downloadFile(fileNames.get(0), RepoService.TEMP_FOLDER);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-    	// RepoService.unzipFile(fileNames.get(0));
-    	// RepoService.visitCode("tmp/");
+    	fileNames.forEach(fileName -> {
+    		System.out.println("Downloading file " + fileName);
+    		/*
+        	try {
+    			s3Service.downloadFile(fileName, RepoService.TEMP_FOLDER);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+        	
+    		System.out.println("Unzip file " + fileName);
+        	RepoService.unzipFile(fileName);
+        	*/
+    		System.out.println("Visit code from " + fileName);
+    		String folderName = fileName.substring(0, fileName.lastIndexOf('.'));
+        	RepoService.visitCode(RepoService.TEMP_FOLDER + "code/" + folderName);
+    		System.out.println("");
+    	});
     }
 }
