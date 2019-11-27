@@ -20,7 +20,7 @@ public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	
 	StatmentsAnalyser statmentsAnalyser;
 	
-	ErlangBaseVisitor() {
+	public ErlangBaseVisitor() {
 		statmentsAnalyser = new StatmentsAnalyser();
 	}
 	
