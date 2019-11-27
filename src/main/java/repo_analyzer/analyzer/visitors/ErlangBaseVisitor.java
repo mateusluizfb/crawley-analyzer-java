@@ -6,6 +6,8 @@ import java.util.List;
 // Generated from Erlang.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
+import repo_analyzer.analyzer.services.StatmentsAnalyser;
+
 /**
  * This class provides an empty implementation of {@link ErlangVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
@@ -15,6 +17,13 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
  * operations with no return type.
  */
 public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements ErlangVisitor<T> {
+	
+	StatmentsAnalyser statmentsAnalyser;
+	
+	ErlangBaseVisitor() {
+		statmentsAnalyser = new StatmentsAnalyser();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -36,18 +45,7 @@ public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitTokAtom(ErlangParser.TokAtomContext ctx) {
-		List<String> supervisorStrategies = new ArrayList<String>();
-		supervisorStrategies.add("one_for_all");
-		supervisorStrategies.add("one_for_one");
-		supervisorStrategies.add("rest_for_one");
-		supervisorStrategies.add("simple_one_for_one");
-		
-		String tokText = ctx.getText();
-
-		if(supervisorStrategies.contains(tokText)) {
-			System.out.println(tokText);
-		}
-		
+		statmentsAnalyser.analyseToken(ctx);
 		return visitChildren(ctx);
 	}
 	
