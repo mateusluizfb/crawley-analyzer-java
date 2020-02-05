@@ -23,22 +23,20 @@ public class App {
     }
     
     public static void run(String zipFileName) {
-		System.out.println("Downloading file " + zipFileName);
-		
     	try {
+    		System.out.println("Downloading file " + zipFileName);
 			s3Service.downloadFile(zipFileName, FileService.TEMP_FOLDER);
+			
+			System.out.println("Unzip file " + zipFileName);
+	    	FileService.unzipFile(zipFileName);
+
+	    	System.out.println("Visit code from " + zipFileName);
+			String codeFolderName = FileService.getCodeFolderName(zipFileName);
+	    	RepoService.visitCode(FileService.CODE_FOLDER + codeFolderName);
+	    	
+			System.out.println(" --- ");
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
-    	
-		System.out.println("Unzip file " + zipFileName);
-    	FileService.unzipFile(zipFileName);
-
-    	System.out.println("Visit code from " + zipFileName);
-		String codeFolderName = FileService.getCodeFolderName(zipFileName);
-    	RepoService.visitCode(FileService.CODE_FOLDER + codeFolderName);
-    	
-		System.out.println(" --- ");
     }
 }

@@ -42,6 +42,7 @@ public class RepoService {
 			InputStream inputstream = new FileInputStream(filePath);
 			ErlangLexer lexer = new ErlangLexer(new ANTLRInputStream(inputstream));
 			ErlangParser parser = new ErlangParser(new CommonTokenStream(lexer));
+			
 		    new ErlangBaseVisitor().visitForms(parser.forms());
 		} catch (IOException e) {
 			e.printStackTrace();
