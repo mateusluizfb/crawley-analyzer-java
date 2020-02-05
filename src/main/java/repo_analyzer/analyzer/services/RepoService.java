@@ -16,20 +16,7 @@ import repo_analyzer.analyzer.visitors.ErlangLexer;
 import repo_analyzer.analyzer.visitors.ErlangParser;
 
 public class RepoService {
-	public static final String TEMP_FOLDER = "tmp/";
-	
-	public static void unzipFile(String fileName) {
-	    String source = "tmp/" + fileName;
-	    String destination = "tmp/code";
 
-	    try {
-	         ZipFile zipFile = new ZipFile(source);
-	         zipFile.extractAll(destination);
-	    } catch (ZipException e) {
-	        e.printStackTrace();
-	    }
-	}
-	
 	public static void visitCode(String folderPath) {		
 		File file = new File(folderPath);
 		File[] matchingFiles = file.listFiles();
@@ -45,7 +32,7 @@ public class RepoService {
 	}
 	
 	private static void runParser(String filePath) {
-		String extension = getExtension(filePath);
+		String extension = FileService.getExtension(filePath);
 
 		if(!extension.equals("erl")) return;
 				
@@ -59,12 +46,5 @@ public class RepoService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private static String getExtension(String fileName) {
-		int i = fileName.lastIndexOf('.');
-		if (i > 0) return fileName.substring(i + 1);
-		
-		return "";
 	}
 }

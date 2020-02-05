@@ -1,9 +1,11 @@
 package repo_analyzer.analyzer;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import repo_analyzer.analyzer.services.S3Service;
+import repo_analyzer.analyzer.services.FileService;
 import repo_analyzer.analyzer.services.RepoService;
 
 
@@ -12,29 +14,31 @@ import repo_analyzer.analyzer.services.RepoService;
  *
  */
 public class App {
+	private static S3Service s3Service = new S3Service();
+	
     public static void main( String[] args ) {
-    	S3Service s3Service = new S3Service();
     	List<String> fileNames = s3Service.listBucketFiles();
+    	FileService.createDefaultFolders();
+    	fileNames.forEach(zipFileName -> run(zipFileName));
+    }
+    
+    public static void run(String zipFileName) {
+		System.out.println("Downloading file " + zipFileName);
+		
+    	try {
+			s3Service.downloadFile(zipFileName, FileService.TEMP_FOLDER);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
     	
-    	fileNames.forEach(fileName -> {
-    		/*
-    		System.out.println("Downloading file " + fileName);
-    		
-        	try {
-    			s3Service.downloadFile(fileName, RepoService.TEMP_FOLDER);
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-        	
-    		System.out.println("Unzip file " + fileName);
-        	RepoService.unzipFile(fileName);
-        	*/
-    		
-    		System.out.println("Visit code from " + fileName);
-    		String folderName = fileName.substring(0, fileName.lastIndexOf('.'));
-        	RepoService.visitCode(RepoService.TEMP_FOLDER + "code/" + folderName);
-        	
-    		System.out.println(" --- ");
-    	});
+		System.out.println("Unzip file " + zipFileName);
+    	FileService.unzipFile(zipFileName);
+
+    	System.out.println("Visit code from " + zipFileName);
+		String codeFolderName = FileService.getCodeFolderName(zipFileName);
+    	RepoService.visitCode(FileService.CODE_FOLDER + codeFolderName);
+    	
+		System.out.println(" --- ");
     }
 }
