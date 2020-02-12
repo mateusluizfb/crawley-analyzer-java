@@ -12,21 +12,18 @@ public class FileService {
 	
 	public static void createDefaultFolders() {
 	   	File tmp = new File(TEMP_FOLDER);
-    	File code = new File(CODE_FOLDER);
 
     	if (!tmp.exists()){
     		tmp.mkdir();
-    		code.mkdir();
         }
 	}
 	
 	public static void unzipFile(String fileName) {
 	    String source = TEMP_FOLDER + fileName;
-	    String destination = CODE_FOLDER;
 
 	    try {
 	         ZipFile zipFile = new ZipFile(source);
-	         zipFile.extractAll(destination);
+	         zipFile.extractAll(TEMP_FOLDER);
 	    } catch (ZipException e) {
 	        e.printStackTrace();
 	    }
