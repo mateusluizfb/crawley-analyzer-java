@@ -34,6 +34,10 @@ public class App {
 			String codeFolderName = FileService.getCodeFolderName(zipFileName);
 	    	RepoService.visitCode(FileService.CODE_FOLDER + codeFolderName);
 	    	
+	    	System.out.println("Deleting zip and code folder");
+	    	FileService.deleteDirectory(new File(FileService.CODE_FOLDER + codeFolderName));
+	    	FileService.deleteFile(new File(FileService.TEMP_FOLDER + zipFileName));
+	    	
 			System.out.println(" --- ");
 		} catch (IOException e) {
 			e.printStackTrace();

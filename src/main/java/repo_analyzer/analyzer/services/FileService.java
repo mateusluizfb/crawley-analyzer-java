@@ -39,4 +39,19 @@ public class FileService {
 	public static String getCodeFolderName(String zipFileName) {
 		return zipFileName.substring(0, zipFileName.lastIndexOf('.'));
 	}
+	
+	public static void deleteFile(File file) {
+		file.delete();
+	}
+	
+	public static boolean deleteDirectory(File directoryToBeDeleted) {
+	    File[] allContents = directoryToBeDeleted.listFiles();
+	    if (allContents != null) {
+	        for (File file : allContents) {
+	            deleteDirectory(file);
+	        }
+	    }
+	    
+	    return directoryToBeDeleted.delete();
+	}
 }

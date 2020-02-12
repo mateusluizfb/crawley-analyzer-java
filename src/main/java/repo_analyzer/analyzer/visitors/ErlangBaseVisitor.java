@@ -638,7 +638,10 @@ public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTryCatch(ErlangParser.TryCatchContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTryCatch(ErlangParser.TryCatchContext ctx) {
+		statmentsAnalyser.analyseToken(ctx);
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
