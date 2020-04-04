@@ -7,6 +7,7 @@ import java.util.List;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 import repo_analyzer.analyzer.services.StatmentsAnalyser;
+import repo_analyzer.analyzer.services.TryCatchAnalyser;
 
 /**
  * This class provides an empty implementation of {@link ErlangVisitor},
@@ -639,7 +640,7 @@ public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitTryCatch(ErlangParser.TryCatchContext ctx) {
-		statmentsAnalyser.analyseToken(ctx);
+		statmentsAnalyser.analyseToken(ctx);		
 		return visitChildren(ctx);
 	}
 	/**
@@ -648,7 +649,10 @@ public class ErlangBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTryClauses(ErlangParser.TryClausesContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTryClauses(ErlangParser.TryClausesContext ctx) {
+		new TryCatchAnalyser().analyseCatchError(ctx);
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
